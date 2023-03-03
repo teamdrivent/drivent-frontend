@@ -5,6 +5,7 @@ import FinishPayment from './FinishPayment';
 
 export default function PaymentMethod() {
   const [method, setMethod] = useState('');
+  const [withOrWithoutHotel, setWithOrWithoutHotel] = useState(false);
 
   console.log(method);
 
@@ -18,13 +19,19 @@ export default function PaymentMethod() {
             <p>Presencial</p>
             <p>R$ 250</p>
           </InPersonMethod>
-          <OnlineMethod onClick={() => setMethod('Online')}>
+          <OnlineMethod
+            onClick={() => {
+              setMethod('Online');
+              setWithOrWithoutHotel(false);
+            }}
+          >
             <p>Online</p>
             <p>R$ 100</p>
           </OnlineMethod>
         </Methods>
-        <PaymentInPerson />
-        <FinishPayment />
+        {method === 'Presencial' ? <PaymentInPerson setWithOrWithoutHotel={setWithOrWithoutHotel} /> : ''}
+        {method === 'Online' ? <FinishPayment /> : ''}
+        {withOrWithoutHotel ? <FinishPayment /> : ''}
       </PaymentContainer>
     </>
   );

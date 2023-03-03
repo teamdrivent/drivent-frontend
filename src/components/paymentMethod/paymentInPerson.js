@@ -1,17 +1,18 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 
-export default function PaymentInPerson() {
+export default function PaymentInPerson(props) {
+  const { setWithOrWithoutHotel } = props;
   return (
     <>
       <PaymentContainer>
         <p>Ótimo! Agora escolha sua modalidade de hospedagem</p>
         <Methods>
-          <InPersonMethod>
+          <InPersonMethod onClick={() => setWithOrWithoutHotel(true)}>
             <p>Sem Hotel</p>
             <p>R$ 0</p>
           </InPersonMethod>
-          <OnlineMethod>
+          <OnlineMethod onClick={() => setWithOrWithoutHotel(true)}>
             <p>Com hotel</p>
             <p>+ R$ 350</p>
           </OnlineMethod>
@@ -48,7 +49,7 @@ const InPersonMethod = styled.div`
     color: #454545;
   }
 
-  :hover{
+  :hover {
     background-color: #ccc;
   }
 
@@ -69,7 +70,7 @@ const OnlineMethod = styled.div`
     color: #454545;
   }
 
-  :hover{
+  :hover {
     background-color: #ccc;
   }
 
