@@ -1,9 +1,10 @@
 import styled from 'styled-components';
 
-export default function FinishPayment() {
+export default function FinishPayment(props) {
+  const { total } = props;
   return (
     <FinishPaymentContainer>
-      <p>Fechado! O total ficou em R$ 600. Agora é só confirmar:</p>
+      <p>Fechado! O total ficou em R$ {total}. Agora é só confirmar:</p>
       <BoxReserve>RESERVAR INGRESSO</BoxReserve>
     </FinishPaymentContainer>
   );
@@ -22,8 +23,8 @@ const BoxReserve = styled.div`
   border-radius: 10px;
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.25);
   cursor: pointer;
-  
-  :hover{
+
+  :hover {
     background-color: #ccc;
   }
 `;

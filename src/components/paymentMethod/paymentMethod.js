@@ -6,32 +6,53 @@ import FinishPayment from './FinishPayment';
 export default function PaymentMethod() {
   const [method, setMethod] = useState('');
   const [withOrWithoutHotel, setWithOrWithoutHotel] = useState(false);
-
-  console.log(method);
-
+  const [total, setTotal] = useState(0);
+  const [colorSelectInPerson, setColorSelectInPerson] = useState('');
+  const [colorOnline, setcolorOnline] = useState('');
+  const [withHotel, setWithHotel] = useState('');
+  const [withoutHotel, setWithoutHotel] = useState('');
   return (
     <>
       <PaymentContainer>
         <h1>Ingresso e pagamento</h1>
         <p>Primeiro, escolha sua modalidade de ingresso</p>
         <Methods>
-          <InPersonMethod onClick={() => setMethod('Presencial')}>
+          <InPersonMethod
+            background={colorSelectInPerson}
+            onClick={() => {
+              setMethod('Presencial');
+              setColorSelectInPerson('#FFEED2');
+              setcolorOnline('');
+              setTotal(250);
+            }}
+          >
             <p>Presencial</p>
             <p>R$ 250</p>
           </InPersonMethod>
           <OnlineMethod
+            background={colorOnline}
             onClick={() => {
               setMethod('Online');
               setWithOrWithoutHotel(false);
+              setTotal(100);
+              setColorSelectInPerson('');
+              setcolorOnline('#FFEED2');
             }}
           >
             <p>Online</p>
             <p>R$ 100</p>
           </OnlineMethod>
         </Methods>
-        {method === 'Presencial' ? <PaymentInPerson setWithOrWithoutHotel={setWithOrWithoutHotel} /> : ''}
-        {method === 'Online' ? <FinishPayment /> : ''}
-        {withOrWithoutHotel ? <FinishPayment /> : ''}
+        {method === 'Presencial' ? (
+          <PaymentInPerson
+            setWithOrWithoutHotel={setWithOrWithoutHotel}
+            setTotal={setTotal}
+          />
+        ) : (
+          ''
+        )}
+        {method === 'Online' ? <FinishPayment total={total} /> : ''}
+        {withOrWithoutHotel ? <FinishPayment total={total} /> : ''}
       </PaymentContainer>
     </>
   );
@@ -58,13 +79,13 @@ const InPersonMethod = styled.div`
   justify-content: center;
   align-items: center;
   margin-right: 24px;
-
+  background-color: ${(props) => props.background};
   p:nth-child(1) {
     color: #454545;
   }
 
   :hover {
-    background-color: #ccc;
+    background-color: #FFEED2;
   }
 
   cursor: pointer;
@@ -79,13 +100,13 @@ const OnlineMethod = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
+  background-color: ${(props) => props.background};
   p:nth-child(1) {
     color: #454545;
   }
 
   :hover {
-    background-color: #ccc;
+    background-color: #FFEED2;
   }
 
   cursor: pointer;
