@@ -1,3 +1,9 @@
+import PaymentStripeButton from '../../../components/PaymentStripeButton';
+
 export default function Payment() {
-  return 'Pagamento: Em breve!';
+  return (
+    <>
+      <PaymentStripeButton />
+    </>
+  );
 }
