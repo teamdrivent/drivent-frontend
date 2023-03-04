@@ -1,13 +1,10 @@
 import React, { useContext } from 'react';
 import axios from 'axios';
 import Button from './Form/Button';
-import UserContext from '../contexts/UserContext';
-import { useNavigate } from 'react-router-dom';
+import useToken from '../hooks/useToken';
 
 export default function PaymentStripeButton() {
-  const navigate = useNavigate();
-  const user = useContext(UserContext);
-  const { token } = user.userData;
+  const token = useToken();
   function goToPaymentPage(e) {
     e.preventDefault();
     axios
@@ -27,7 +24,7 @@ export default function PaymentStripeButton() {
   return (
     <>
       <form onSubmit={goToPaymentPage}>
-        <button type="submit">Ir para página de pagamento</button>;
+        <Button type="submit">FINALIZAR PAGAMENTO</Button>
       </form>
     </>
   );
