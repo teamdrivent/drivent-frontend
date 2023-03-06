@@ -3,14 +3,14 @@ import styled from 'styled-components';
 import PaymentInPerson from './paymentInPerson';
 import FinishPayment from './FinishPayment';
 
-export default function PaymentMethod() {
+export default function PaymentMethod(props) {
+  const { setHasTicket } = props;
   const [method, setMethod] = useState('');
   const [withOrWithoutHotel, setWithOrWithoutHotel] = useState(false);
   const [total, setTotal] = useState(0);
   const [colorSelectInPerson, setColorSelectInPerson] = useState('');
   const [colorOnline, setcolorOnline] = useState('');
-  const [withHotel, setWithHotel] = useState('');
-  const [withoutHotel, setWithoutHotel] = useState('');
+
   return (
     <>
       <PaymentContainer>
@@ -44,15 +44,12 @@ export default function PaymentMethod() {
           </OnlineMethod>
         </Methods>
         {method === 'Presencial' ? (
-          <PaymentInPerson
-            setWithOrWithoutHotel={setWithOrWithoutHotel}
-            setTotal={setTotal}
-          />
+          <PaymentInPerson setWithOrWithoutHotel={setWithOrWithoutHotel} setTotal={setTotal} />
         ) : (
           ''
         )}
-        {method === 'Online' ? <FinishPayment total={total} /> : ''}
-        {withOrWithoutHotel ? <FinishPayment total={total} /> : ''}
+        {method === 'Online' ? <FinishPayment total={total} setHasTicket={setHasTicket} /> : ''}
+        {withOrWithoutHotel ? <FinishPayment total={total} setHasTicket={setHasTicket} /> : ''}
       </PaymentContainer>
     </>
   );
@@ -85,7 +82,7 @@ const InPersonMethod = styled.div`
   }
 
   :hover {
-    background-color: #FFEED2;
+    background-color: #ffeed2;
   }
 
   cursor: pointer;
@@ -106,7 +103,7 @@ const OnlineMethod = styled.div`
   }
 
   :hover {
-    background-color: #FFEED2;
+    background-color: #ffeed2;
   }
 
   cursor: pointer;
