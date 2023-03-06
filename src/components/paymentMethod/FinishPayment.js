@@ -1,11 +1,47 @@
+import axios from 'axios';
 import styled from 'styled-components';
+import useToken from '../../hooks/useToken';
 
 export default function FinishPayment(props) {
-  const { total } = props;
+  const { total, setHasTicket } = props;
+  const token = useToken();
+
+  let body = {};
+
+  if (total === 100) {
+    body = {
+      ticketTypeId: 1,
+    };
+  }
+  if (total === 600) {
+    body = {
+      ticketTypeId: 2,
+    };
+  }
+  if (total === 250) {
+    body = {
+      ticketTypeId: 3,
+    };
+  }
+
+  function ReservedTicket() {
+    axios
+      .post(`${process.env.REACT_APP_API_BASE_URL}/tickets`, body, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((resp) => {
+        console.log(resp);
+        setHasTicket(true);
+      })
+      .catch((err) => console.log(err));
+  }
+
   return (
     <FinishPaymentContainer>
-      <p>Fechado! O total ficou em R$ {total}. Agora é só confirmar:</p>
-      <BoxReserve>RESERVAR INGRESSO</BoxReserve>
+      <p>Fechado! O total ficou em R$ {total}. Agora é só confirmar sua compra:</p>
+      <BoxReserve onClick={() => ReservedTicket()}>RESERVAR INGRESSO</BoxReserve>
     </FinishPaymentContainer>
   );
 }

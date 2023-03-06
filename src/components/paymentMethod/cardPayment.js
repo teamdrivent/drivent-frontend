@@ -1,14 +1,10 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import useTicket from '../../hooks/api/useTicket';
-import Button from '../../components/Form/Button';
 import { HiCheckCircle } from 'react-icons/hi';
 import PaymentStripeButton from '../PaymentStripeButton';
 
 export default function CardPayment() {
-  const [method, setMethod] = useState('');
-  const [withOrWithoutHotel, setWithOrWithoutHotel] = useState(false);
-  const [total, setTotal] = useState(0);
   const [colorSelectInPerson, setColorSelectInPerson] = useState('');
   const { ticket } = useTicket();
 
