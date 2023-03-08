@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import useToken from '../../hooks/useToken';
 
 export default function FinishPayment(props) {
-  const { total, setHasTicket } = props;
+  const { total, setHasTicket, totalRender } = props;
   const token = useToken();
 
   let body = {};
@@ -40,7 +40,7 @@ export default function FinishPayment(props) {
 
   return (
     <FinishPaymentContainer>
-      <p>Fechado! O total ficou em R$ {total}. Agora é só confirmar sua compra:</p>
+      <p>Fechado! O total ficou em R$ {totalRender}. Agora é só confirmar sua compra:</p>
       <BoxReserve onClick={() => ReservedTicket()}>RESERVAR INGRESSO</BoxReserve>
     </FinishPaymentContainer>
   );
