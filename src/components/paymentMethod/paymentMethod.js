@@ -1,7 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import PaymentInPerson from './paymentInPerson';
 import FinishPayment from './FinishPayment';
+import axios from 'axios';
+import useToken from '../../hooks/useToken';
 
 export default function PaymentMethod(props) {
   const { setHasTicket } = props;
@@ -10,6 +12,25 @@ export default function PaymentMethod(props) {
   const [total, setTotal] = useState(0);
   const [colorSelectInPerson, setColorSelectInPerson] = useState('');
   const [colorOnline, setcolorOnline] = useState('');
+  const [respServerPosition0, setRespServerPosition0] = useState([]);
+  const [respServerPosition1, setRespServerPosition1] = useState([]);
+  const [totalRender, setTotalRender] = useState(0);
+  const token = useToken();
+
+  useEffect(() => {
+    const promisse = axios
+      .get(`${process.env.REACT_APP_API_BASE_URL}/tickets/types`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((resp) => {
+        console.log(resp.data);
+        setRespServerPosition0(resp.data[0]);
+        setRespServerPosition1(resp.data[1]);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   return (
     <>
@@ -24,10 +45,11 @@ export default function PaymentMethod(props) {
               setColorSelectInPerson('#FFEED2');
               setcolorOnline('');
               setTotal(250);
+              setTotalRender(respServerPosition1.price);
             }}
           >
-            <p>Presencial</p>
-            <p>R$ 250</p>
+            <p>{respServerPosition1.name}</p>
+            <p>R$ {respServerPosition1.price}</p>
           </InPersonMethod>
           <OnlineMethod
             background={colorOnline}
@@ -37,19 +59,36 @@ export default function PaymentMethod(props) {
               setTotal(100);
               setColorSelectInPerson('');
               setcolorOnline('#FFEED2');
+              setTotalRender(respServerPosition0.price);
             }}
           >
-            <p>Online</p>
-            <p>R$ 100</p>
+            <p>{respServerPosition0.name}</p>
+            <p>R$ {respServerPosition0.price}</p>
           </OnlineMethod>
         </Methods>
+
         {method === 'Presencial' ? (
-          <PaymentInPerson setWithOrWithoutHotel={setWithOrWithoutHotel} setTotal={setTotal} />
+          <PaymentInPerson
+            setWithOrWithoutHotel={setWithOrWithoutHotel}
+            setTotal={setTotal}
+            setTotalRender={setTotalRender}
+            respServerPosition1={respServerPosition1}
+            respServerPosition0={respServerPosition0}
+            totalRender={totalRender}
+          />
         ) : (
           ''
         )}
-        {method === 'Online' ? <FinishPayment total={total} setHasTicket={setHasTicket} /> : ''}
-        {withOrWithoutHotel ? <FinishPayment total={total} setHasTicket={setHasTicket} /> : ''}
+        {method === 'Online' ? (
+          <FinishPayment total={total} setHasTicket={setHasTicket} totalRender={totalRender} />
+        ) : (
+          ''
+        )}
+        {withOrWithoutHotel ? (
+          <FinishPayment total={total} setHasTicket={setHasTicket} totalRender={totalRender} />
+        ) : (
+          ''
+        )}
       </PaymentContainer>
     </>
   );

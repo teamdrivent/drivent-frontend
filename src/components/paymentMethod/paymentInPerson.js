@@ -2,7 +2,8 @@ import { useState } from 'react';
 import styled from 'styled-components';
 
 export default function PaymentInPerson(props) {
-  const { setWithOrWithoutHotel, setTotal } = props;
+  const { setWithOrWithoutHotel, setTotal, setTotalRender, respServerPosition1, respServerPosition0, totalRender } =
+    props;
   const [withHotel, setWithHotel] = useState('');
   const [withoutHotel, setWithoutHotel] = useState('');
   return (
@@ -17,6 +18,7 @@ export default function PaymentInPerson(props) {
               setWithoutHotel('#FFEED2');
               setWithHotel('');
               setTotal(250);
+              setTotalRender(respServerPosition1.price);
             }}
           >
             <p>Sem Hotel</p>
@@ -29,6 +31,7 @@ export default function PaymentInPerson(props) {
               setTotal(600);
               setWithHotel('#FFEED2');
               setWithoutHotel('');
+              setTotalRender(totalRender + 350);
             }}
           >
             <p>Com hotel</p>
@@ -62,13 +65,13 @@ const InPersonMethod = styled.div`
   justify-content: center;
   align-items: center;
   margin-right: 24px;
-  background-color: ${props => props.backgroud};
+  background-color: ${(props) => props.backgroud};
   p:nth-child(1) {
     color: #454545;
   }
 
   :hover {
-    background-color: #FFEED2;
+    background-color: #ffeed2;
   }
 
   cursor: pointer;
@@ -83,14 +86,14 @@ const OnlineMethod = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: ${props => props.backgroud};
+  background-color: ${(props) => props.backgroud};
 
   p:nth-child(1) {
     color: #454545;
   }
 
   :hover {
-    background-color: #FFEED2;
+    background-color: #ffeed2;
   }
 
   cursor: pointer;
