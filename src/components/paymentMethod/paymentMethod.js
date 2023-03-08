@@ -48,8 +48,8 @@ export default function PaymentMethod(props) {
               setTotalRender(respServerPosition1.price);
             }}
           >
-            <p>{respServerPosition1.name}</p>
-            <p>R$ {respServerPosition1.price}</p>
+            <p>{respServerPosition1.name.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
+            <p>{respServerPosition1.price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
           </InPersonMethod>
           <OnlineMethod
             background={colorOnline}
@@ -62,8 +62,8 @@ export default function PaymentMethod(props) {
               setTotalRender(respServerPosition0.price);
             }}
           >
-            <p>{respServerPosition0.name}</p>
-            <p>R$ {respServerPosition0.price}</p>
+            <p>{respServerPosition0.name.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
+            <p>{respServerPosition0.price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
           </OnlineMethod>
         </Methods>
 
@@ -80,12 +80,12 @@ export default function PaymentMethod(props) {
           ''
         )}
         {method === 'Online' ? (
-          <FinishPayment total={total} setHasTicket={setHasTicket} totalRender={totalRender} />
+          <FinishPayment total={total} setHasTicket={setHasTicket} totalRender={totalRender} setTotalRender={setTotalRender} />
         ) : (
           ''
         )}
         {withOrWithoutHotel ? (
-          <FinishPayment total={total} setHasTicket={setHasTicket} totalRender={totalRender} />
+          <FinishPayment total={total} setHasTicket={setHasTicket} totalRender={totalRender} setTotalRender={setTotalRender}/>
         ) : (
           ''
         )}

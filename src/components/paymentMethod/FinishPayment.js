@@ -3,9 +3,10 @@ import styled from 'styled-components';
 import useToken from '../../hooks/useToken';
 
 export default function FinishPayment(props) {
-  const { total, setHasTicket, totalRender } = props;
+  const { total, setHasTicket, totalRender, setTotalRender } = props;
   const token = useToken();
-
+  const totalRenderReal = totalRender.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+  setTotalRender(totalRenderReal);
   let body = {};
 
   if (total === 100) {
@@ -40,7 +41,7 @@ export default function FinishPayment(props) {
 
   return (
     <FinishPaymentContainer>
-      <p>Fechado! O total ficou em R$ {totalRender}. Agora é só confirmar sua compra:</p>
+      <p>Fechado! O total ficou em R$ {totalRenderReal}. Agora é só confirmar sua compra:</p>
       <BoxReserve onClick={() => ReservedTicket()}>RESERVAR INGRESSO</BoxReserve>
     </FinishPaymentContainer>
   );

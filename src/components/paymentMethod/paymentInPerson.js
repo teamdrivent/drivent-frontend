@@ -35,7 +35,7 @@ export default function PaymentInPerson(props) {
             }}
           >
             <p>Com hotel</p>
-            <p>+ R$ 350</p>
+            <p>+ R$ 350,00</p>
           </OnlineMethod>
         </Methods>
       </PaymentContainer>
