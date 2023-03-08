@@ -48,7 +48,7 @@ export default function PaymentMethod(props) {
               setTotalRender(respServerPosition1.price);
             }}
           >
-            <p>{respServerPosition1.name.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
+            <p>{respServerPosition1.name}</p>
             <p>{respServerPosition1.price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
           </InPersonMethod>
           <OnlineMethod
@@ -62,7 +62,7 @@ export default function PaymentMethod(props) {
               setTotalRender(respServerPosition0.price);
             }}
           >
-            <p>{respServerPosition0.name.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
+            <p>{respServerPosition0.name}</p>
             <p>{respServerPosition0.price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
           </OnlineMethod>
         </Methods>
