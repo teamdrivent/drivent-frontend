@@ -1,9 +1,10 @@
 import axios from 'axios';
 import styled from 'styled-components';
+import useTicket from '../../hooks/api/useTicket';
 import useToken from '../../hooks/useToken';
 
 export default function FinishPayment(props) {
-  const { total, setHasTicket, totalRender, setTotalRender } = props;
+  const { total, ticket, setTicket, totalRender, setTotalRender } = props;
   const token = useToken();
   const totalRenderReal = totalRender.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
   setTotalRender(totalRenderReal);
@@ -34,7 +35,19 @@ export default function FinishPayment(props) {
       })
       .then((resp) => {
         console.log(resp);
-        setHasTicket(true);
+        const promisse = axios
+          .get(`${process.env.REACT_APP_API_BASE_URL}/tickets`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+          .then((res) => {
+            setTicket(res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        // setHasTicket(true);
       })
       .catch((err) => console.log(err));
   }
