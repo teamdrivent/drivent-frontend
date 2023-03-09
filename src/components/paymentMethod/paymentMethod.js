@@ -15,21 +15,27 @@ export default function PaymentMethod(props) {
   const [respServerPosition0, setRespServerPosition0] = useState([]);
   const [respServerPosition1, setRespServerPosition1] = useState([]);
   const [totalRender, setTotalRender] = useState(0);
+  const [isMounting, setIsMounting] = useState(true);
   const token = useToken();
 
   useEffect(() => {
-    const promisse = axios
-      .get(`${process.env.REACT_APP_API_BASE_URL}/tickets/types`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((resp) => {
-        console.log(resp.data);
-        setRespServerPosition0(resp.data[0]);
-        setRespServerPosition1(resp.data[1]);
-      })
-      .catch((err) => console.log(err));
+    if (isMounting) {
+      axios
+        .get(`${process.env.REACT_APP_API_BASE_URL}/tickets/types`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((resp) => {
+          console.log(resp.data);
+          setRespServerPosition0(resp.data[0]);
+          setRespServerPosition1(resp.data[1]);
+        })
+        .catch((err) => console.log(err));
+    }
+    return () => {
+      setIsMounting(false);
+    };
   }, []);
 
   return (
@@ -59,7 +65,7 @@ export default function PaymentMethod(props) {
               setTotal(100);
               setColorSelectInPerson('');
               setcolorOnline('#FFEED2');
-              setTotalRender(respServerPosition0.price/100);
+              setTotalRender(respServerPosition0.price / 100);
             }}
           >
             <p>{respServerPosition0.name}</p>
