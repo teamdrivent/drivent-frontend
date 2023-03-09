@@ -27,7 +27,7 @@ export default function PaymentMethod(props) {
       .then((resp) => {
         console.log(resp.data);
         setRespServerPosition0(resp.data[0]);
-        setRespServerPosition1(resp.data[2]);
+        setRespServerPosition1(resp.data[1]);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -45,7 +45,7 @@ export default function PaymentMethod(props) {
               setColorSelectInPerson('#FFEED2');
               setcolorOnline('');
               setTotal(250);
-              setTotalRender(respServerPosition1.price);
+              setTotalRender(respServerPosition1.price/100);
             }}
           >
             <p>{respServerPosition1.name}</p>
@@ -59,7 +59,7 @@ export default function PaymentMethod(props) {
               setTotal(100);
               setColorSelectInPerson('');
               setcolorOnline('#FFEED2');
-              setTotalRender(respServerPosition0.price);
+              setTotalRender(respServerPosition0.price/100);
             }}
           >
             <p>{respServerPosition0.name}</p>

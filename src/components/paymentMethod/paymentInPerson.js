@@ -18,7 +18,7 @@ export default function PaymentInPerson(props) {
               setWithoutHotel('#FFEED2');
               setWithHotel('');
               setTotal(250);
-              setTotalRender(respServerPosition1.price);
+              setTotalRender(respServerPosition1.price/100);
             }}
           >
             <p>Sem Hotel</p>
