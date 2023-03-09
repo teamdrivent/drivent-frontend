@@ -37,6 +37,9 @@
     "eject": "react-scripts eject",
     "prepare": "husky install"
   },
+  "engines": {
+    "node": "16.x"
+  },
   "eslintConfig": {
     "extends": [
       "react-app",
