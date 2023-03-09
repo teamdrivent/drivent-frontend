@@ -4,12 +4,8 @@ import useTicket from '../../hooks/api/useTicket';
 import { HiCheckCircle } from 'react-icons/hi';
 import PaymentStripeButton from '../PaymentStripeButton';
 
-export default function CardPayment() {
+export default function CardPayment({ ticket }) {
   const [colorSelectInPerson, setColorSelectInPerson] = useState('');
-  const { ticket } = useTicket();
-
-  console.log(ticket);
-
   return (
     <>
       <PaymentContainer>
@@ -29,7 +25,7 @@ export default function CardPayment() {
           </ChosenTicket>
         </Methods>
         <p>Pagamento</p>
-        {ticket?.TicketType.status === 'PAID' ? (
+        {ticket?.status === 'PAID' ? (
           <PaidContainer>
             <HiCheckCircle />
             <PaidText>
