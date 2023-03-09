@@ -35,7 +35,7 @@ export default function FinishPayment(props) {
       })
       .then((resp) => {
         console.log(resp);
-        const promisse = axios
+        axios
           .get(`${process.env.REACT_APP_API_BASE_URL}/tickets`, {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -54,7 +54,7 @@ export default function FinishPayment(props) {
 
   return (
     <FinishPaymentContainer>
-      <p>Fechado! O total ficou em R$ {totalRenderReal}. Agora é só confirmar sua compra:</p>
+      <p>Fechado! O total ficou em R$ {total}. Agora é só confirmar sua compra:</p>
       <BoxReserve onClick={() => ReservedTicket()}>RESERVAR INGRESSO</BoxReserve>
     </FinishPaymentContainer>
   );
