@@ -45,7 +45,7 @@ export default function PaymentMethod(props) {
               setColorSelectInPerson('#FFEED2');
               setcolorOnline('');
               setTotal(250);
-              setTotalRender(respServerPosition1.price);
+              setTotalRender(respServerPosition1.price / 100);
             }}
           >
             <p>{respServerPosition1.name}</p>
