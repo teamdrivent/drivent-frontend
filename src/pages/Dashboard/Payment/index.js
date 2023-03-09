@@ -10,35 +10,43 @@ export default function Payment() {
   const token = useToken();
   const [enrollment, setEnrollment] = useState(null);
   const [ticket, setTicket] = useState(null);
+  const [update, setUpdate] = useState(false);
+  const [isMounting, setIsMounting] = useState(true);
 
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_API_BASE_URL}/tickets`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        setTicket(res.data);
-      })
-      .catch((err) => console.log(err));
+    if (isMounting) {
+      axios
+        .get(`${process.env.REACT_APP_API_BASE_URL}/tickets`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          console.log(res.data);
+          setTicket(res.data);
+        })
+        .catch((err) => console.log(err));
 
-    axios
-      .get(`${process.env.REACT_APP_API_BASE_URL}/enrollments`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        setEnrollment(res.data);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+      axios
+        .get(`${process.env.REACT_APP_API_BASE_URL}/enrollments`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          setEnrollment(res.data);
+        })
+        .catch((err) => console.log(err));
+      return () => {
+        setIsMounting(false);
+      };
+    }
+  }, [ticket]);
   return (
     <>
       {enrollment !== null ? (
         ticket !== null ? (
-          <CardPayment ticket={ticket} />
+          <CardPayment ticket={ticket} update={update} />
         ) : (
           <PaymentMethod ticket={ticket} setTicket={setTicket} />
         )
