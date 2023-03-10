@@ -1,16 +1,23 @@
+import { useEffect, useState } from 'react';
 import WithoutHotel from '../../../components/Hotel/withouHotel';
 import WithoutPay from '../../../components/Hotel/withoutPay';
 import WithPay from '../../../components/Hotel/withPay';
 import useTicket from '../../../hooks/api/useTicket';
-
+import useToken from '../../../hooks/useToken';
+import axios from 'axios';
 export default function Hotel() {
-  const ticket = useTicket();
-  //{ticket.status !== 'PAID' ? <WithoutPay /> : ''}
-  //{ticket.ticketType === 1 || ticket.ticketType === 3 ? <WithoutHotel /> : ''}
+  const token = useToken();
+  const [ticket, setTicket] = useState(null);
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_API_BASE_URL}/tickets`, { headers: { Authorization: `Bearer ${token}` } })
+      .then((res) => {
+        console.log(res.data);
+        setTicket(res.data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
-  return (
-    <>
-      <WithPay />
-    </>
-  );
+  //{ticket?.ticketType === 1 || ticket?.ticketType === 3 ? <WithoutHotel /> : <WithPay />}
+  return <>{ticket?.status !== 'PAID' ? <WithoutPay /> : <WithPay />}</>;
 }
