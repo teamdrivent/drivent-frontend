@@ -4,23 +4,32 @@ import useTicket from '../../hooks/api/useTicket';
 import useToken from '../../hooks/useToken';
 
 export default function FinishPayment(props) {
-  const { total, ticket, setTicket, totalRender, setTotalRender } = props;
+  const {
+    total,
+    ticket,
+    setTicket,
+    totalRender,
+    setTotalRender,
+    respServerPosition2,
+    respServerPosition1,
+    respServerPosition0,
+  } = props;
   const token = useToken();
   const totalRenderReal = totalRender.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
   setTotalRender(totalRenderReal);
   let body = {};
 
-  if (total === 100) {
+  if (total === respServerPosition0.price/100) {
     body = {
       ticketTypeId: 1,
     };
   }
-  if (total === 600) {
+  if (total === respServerPosition1.price/100) {
     body = {
       ticketTypeId: 2,
     };
   }
-  if (total === 250) {
+  if (total === respServerPosition2.price/100) {
     body = {
       ticketTypeId: 3,
     };

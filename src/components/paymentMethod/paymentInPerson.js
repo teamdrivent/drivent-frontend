@@ -2,8 +2,15 @@ import { useState } from 'react';
 import styled from 'styled-components';
 
 export default function PaymentInPerson(props) {
-  const { setWithOrWithoutHotel, setTotal, setTotalRender, respServerPosition1, respServerPosition0, totalRender } =
-    props;
+  const {
+    setWithOrWithoutHotel,
+    setTotal,
+    setTotalRender,
+    respServerPosition0,
+    respServerPosition1,
+    respServerPosition2,
+    totalRender,
+  } = props;
   const [withHotel, setWithHotel] = useState('');
   const [withoutHotel, setWithoutHotel] = useState('');
   return (
@@ -17,8 +24,8 @@ export default function PaymentInPerson(props) {
               setWithOrWithoutHotel(true);
               setWithoutHotel('#FFEED2');
               setWithHotel('');
-              setTotal(250);
-              setTotalRender((respServerPosition1.price/100)-350);
+              setTotal(respServerPosition2.price / 100);
+              setTotalRender(respServerPosition2.price / 100);
             }}
           >
             <p>Sem Hotel</p>
@@ -28,14 +35,14 @@ export default function PaymentInPerson(props) {
             backgroud={withHotel}
             onClick={() => {
               setWithOrWithoutHotel(true);
-              setTotal(600);
+              setTotal(respServerPosition1.price / 100);
               setWithHotel('#FFEED2');
               setWithoutHotel('');
-              setTotalRender((respServerPosition1.price/100));
+              setTotalRender(respServerPosition1.price / 100);
             }}
           >
             <p>Com hotel</p>
-            <p>+ R$ 350</p>
+            <p>+ R$ {respServerPosition1.price / 100 - respServerPosition2.price / 100}</p>
           </OnlineMethod>
         </Methods>
       </PaymentContainer>

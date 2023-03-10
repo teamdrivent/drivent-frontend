@@ -12,8 +12,9 @@ export default function PaymentMethod(props) {
   const [total, setTotal] = useState(0);
   const [colorSelectInPerson, setColorSelectInPerson] = useState('');
   const [colorOnline, setcolorOnline] = useState('');
-  const [respServerPosition0, setRespServerPosition0] = useState([]);
-  const [respServerPosition1, setRespServerPosition1] = useState([]);
+  const [respServerPosition0, setRespServerPosition0] = useState({});
+  const [respServerPosition1, setRespServerPosition1] = useState({});
+  const [respServerPosition2, setRespServerPosition2] = useState({});
   const [totalRender, setTotalRender] = useState(0);
   const [isMounting, setIsMounting] = useState(true);
   const token = useToken();
@@ -30,6 +31,7 @@ export default function PaymentMethod(props) {
           console.log(resp.data);
           setRespServerPosition0(resp.data[0]);
           setRespServerPosition1(resp.data[1]);
+          setRespServerPosition2(resp.data[2]);
         })
         .catch((err) => console.log(err));
     }
@@ -50,19 +52,19 @@ export default function PaymentMethod(props) {
               setMethod('Presencial');
               setColorSelectInPerson('#FFEED2');
               setcolorOnline('');
-              setTotal(250);
-              setTotalRender(respServerPosition1.price / 100 - 350);
+              setTotal(respServerPosition2.price / 100);
+              setTotalRender(respServerPosition2.price / 100);
             }}
           >
             <p>{respServerPosition1.name}</p>
-            <p>R$ {respServerPosition1.price / 100 - 350}</p>
+            <p>R$ {respServerPosition2.price / 100}</p>
           </InPersonMethod>
           <OnlineMethod
             background={colorOnline}
             onClick={() => {
               setMethod('Online');
               setWithOrWithoutHotel(false);
-              setTotal(100);
+              setTotal(respServerPosition0.price / 100);
               setColorSelectInPerson('');
               setcolorOnline('#FFEED2');
               setTotalRender(respServerPosition0.price / 100);
@@ -78,6 +80,7 @@ export default function PaymentMethod(props) {
             setWithOrWithoutHotel={setWithOrWithoutHotel}
             setTotal={setTotal}
             setTotalRender={setTotalRender}
+            respServerPosition2={respServerPosition2}
             respServerPosition1={respServerPosition1}
             respServerPosition0={respServerPosition0}
             totalRender={totalRender}
@@ -92,6 +95,9 @@ export default function PaymentMethod(props) {
             setTicket={setTicket}
             totalRender={totalRender}
             setTotalRender={setTotalRender}
+            respServerPosition2={respServerPosition2}
+            respServerPosition1={respServerPosition1}
+            respServerPosition0={respServerPosition0}
           />
         ) : (
           ''
@@ -102,6 +108,9 @@ export default function PaymentMethod(props) {
             ticket={ticket}
             setTicket={setTicket}
             totalRender={totalRender}
+            respServerPosition2={respServerPosition2}
+            respServerPosition1={respServerPosition1}
+            respServerPosition0={respServerPosition0}
             setTotalRender={setTotalRender}
           />
         ) : (
