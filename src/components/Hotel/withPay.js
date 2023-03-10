@@ -1,6 +1,23 @@
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import useToken from '../../hooks/useToken';
 
 export default function WithPay() {
+  const token = useToken();
+  const [hotels, setHotels] = useState([]);
+  const [rooms, setRooms] = useState([]);
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_API_BASE_URL}/hotels`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((resp) => console.log(resp.data))
+      .catch((err) => console.log(err));
+  }, []);
+
   return (
     <WithPayContainer>
       <h1>Escolha de hotel e quarto</h1>
@@ -22,7 +39,7 @@ export default function WithPay() {
 const WithPayContainer = styled.div`
   font-size: 34px;
   height: 95%;
-  h1{
+  h1 {
     margin-bottom: 36px;
   }
 `;
@@ -36,10 +53,10 @@ const HotelList = styled.div`
 `;
 
 const Hotel = styled.div`
-    img{
-        width: 168px;
-        height: 109px;
-    }
+  img {
+    width: 168px;
+    height: 109px;
+  }
   h2 {
     font-size: 20px;
     margin-bottom: 10px;
@@ -50,6 +67,6 @@ const Hotel = styled.div`
   p {
     margin-bottom: 14px;
     font-size: 12px;
-    color: #3C3C3C;
+    color: #3c3c3c;
   }
 `;
