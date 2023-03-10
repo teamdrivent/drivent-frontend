@@ -18,6 +18,11 @@ export default function Hotel() {
       .catch((err) => console.log(err));
   }, []);
 
-  //{ticket?.ticketType === 1 || ticket?.ticketType === 3 ? <WithoutHotel /> : <WithPay />}
-  return <>{ticket?.status !== 'PAID' ? <WithoutPay /> : <WithPay />}</>;
+  return (
+    <>
+      {ticket?.ticketTypeId === 1 || ticket?.ticketTypeId === 3 ? <WithoutHotel /> : ''}
+      {ticket?.status !== 'PAID' ? <WithoutPay /> : ''}
+      {ticket?.ticketTypeId === 2 && ticket?.status === 'PAID' ? <WithPay /> : ''}
+    </>
+  );
 }
