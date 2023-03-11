@@ -51,11 +51,11 @@ export default function PaymentMethod(props) {
               setColorSelectInPerson('#FFEED2');
               setcolorOnline('');
               setTotal(250);
-              setTotalRender(respServerPosition1.price / 100);
+              setTotalRender(respServerPosition1.price / 100 - 350);
             }}
           >
             <p>{respServerPosition1.name}</p>
-            <p>R$ {respServerPosition1.price / 100}</p>
+            <p>R$ {respServerPosition1.price / 100 - 350}</p>
           </InPersonMethod>
           <OnlineMethod
             background={colorOnline}
