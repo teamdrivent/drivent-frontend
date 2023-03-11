@@ -18,11 +18,11 @@ export default function PaymentInPerson(props) {
               setWithoutHotel('#FFEED2');
               setWithHotel('');
               setTotal(250);
-              setTotalRender(respServerPosition1.price);
+              setTotalRender(respServerPosition1.price/100);
             }}
           >
             <p>Sem Hotel</p>
-            <p>R$ 0</p>
+            <p>+ R$ 0</p>
           </InPersonMethod>
           <OnlineMethod
             backgroud={withHotel}
@@ -31,11 +31,11 @@ export default function PaymentInPerson(props) {
               setTotal(600);
               setWithHotel('#FFEED2');
               setWithoutHotel('');
-              setTotalRender(Number(respServerPosition1.price) + 350);
+              setTotalRender(Number(respServerPosition1.price/100) + 350);
             }}
           >
             <p>Com hotel</p>
-            <p>+ R$ 350,00</p>
+            <p>+ R$ 350</p>
           </OnlineMethod>
         </Methods>
       </PaymentContainer>

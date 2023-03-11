@@ -1,10 +1,16 @@
-import ShowHotels from '../../../components/RenderHotelsAndRooms/ShowHotels';
+import WithoutHotel from '../../../components/Hotel/withouHotel';
+import WithoutPay from '../../../components/Hotel/withoutPay';
+import WithPay from '../../../components/Hotel/withPay';
+import useTicket from '../../../hooks/api/useTicket';
+
 export default function Hotel() {
-  const getHotels = [1, 2, 3];
+  const ticket = useTicket();
+  //{ticket.status !== 'PAID' ? <WithoutPay /> : ''}
+  //{ticket.ticketType === 1 || ticket.ticketType === 3 ? <WithoutHotel /> : ''}
+
   return (
     <>
-      {getHotels.length === 0? 'Hotel: Em breve!' :  <ShowHotels/>
-      }
+      <WithPay />
     </>
   );
 }

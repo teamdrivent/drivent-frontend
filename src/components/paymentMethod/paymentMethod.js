@@ -6,7 +6,7 @@ import axios from 'axios';
 import useToken from '../../hooks/useToken';
 
 export default function PaymentMethod(props) {
-  const { setHasTicket } = props;
+  const { ticket, setTicket } = props;
   const [method, setMethod] = useState('');
   const [withOrWithoutHotel, setWithOrWithoutHotel] = useState(false);
   const [total, setTotal] = useState(0);
@@ -15,21 +15,27 @@ export default function PaymentMethod(props) {
   const [respServerPosition0, setRespServerPosition0] = useState([]);
   const [respServerPosition1, setRespServerPosition1] = useState([]);
   const [totalRender, setTotalRender] = useState(0);
+  const [isMounting, setIsMounting] = useState(true);
   const token = useToken();
 
   useEffect(() => {
-    const promisse = axios
-      .get(`${process.env.REACT_APP_API_BASE_URL}/tickets/types`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((resp) => {
-        console.log(resp.data);
-        setRespServerPosition0(resp.data[0]);
-        setRespServerPosition1(resp.data[1]);
-      })
-      .catch((err) => console.log(err));
+    if (isMounting) {
+      axios
+        .get(`${process.env.REACT_APP_API_BASE_URL}/tickets/types`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((resp) => {
+          console.log(resp.data);
+          setRespServerPosition0(resp.data[0]);
+          setRespServerPosition1(resp.data[1]);
+        })
+        .catch((err) => console.log(err));
+    }
+    return () => {
+      setIsMounting(false);
+    };
   }, []);
 
   return (
@@ -45,11 +51,11 @@ export default function PaymentMethod(props) {
               setColorSelectInPerson('#FFEED2');
               setcolorOnline('');
               setTotal(250);
-              setTotalRender(respServerPosition1.price);
+              setTotalRender(respServerPosition1.price / 100);
             }}
           >
             <p>{respServerPosition1.name}</p>
-            <p>{respServerPosition1.price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
+            <p>R$ {respServerPosition1.price / 100}</p>
           </InPersonMethod>
           <OnlineMethod
             background={colorOnline}
@@ -59,11 +65,11 @@ export default function PaymentMethod(props) {
               setTotal(100);
               setColorSelectInPerson('');
               setcolorOnline('#FFEED2');
-              setTotalRender(respServerPosition0.price);
+              setTotalRender(respServerPosition0.price / 100);
             }}
           >
             <p>{respServerPosition0.name}</p>
-            <p>{respServerPosition0.price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
+            <p>R$ {respServerPosition0.price / 100}</p>
           </OnlineMethod>
         </Methods>
 
@@ -80,12 +86,24 @@ export default function PaymentMethod(props) {
           ''
         )}
         {method === 'Online' ? (
-          <FinishPayment total={total} setHasTicket={setHasTicket} totalRender={totalRender} setTotalRender={setTotalRender} />
+          <FinishPayment
+            total={total}
+            ticket={ticket}
+            setTicket={setTicket}
+            totalRender={totalRender}
+            setTotalRender={setTotalRender}
+          />
         ) : (
           ''
         )}
         {withOrWithoutHotel ? (
-          <FinishPayment total={total} setHasTicket={setHasTicket} totalRender={totalRender} setTotalRender={setTotalRender}/>
+          <FinishPayment
+            total={total}
+            ticket={ticket}
+            setTicket={setTicket}
+            totalRender={totalRender}
+            setTotalRender={setTotalRender}
+          />
         ) : (
           ''
         )}
