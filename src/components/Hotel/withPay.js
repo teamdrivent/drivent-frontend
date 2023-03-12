@@ -2,10 +2,13 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import useToken from '../../hooks/useToken';
+import RoomsList from '../RenderHotelsAndRooms/RoomsList';
+import Hotel from './HotelComponent';
 
 export default function WithPay() {
   const token = useToken();
   const [hotels, setHotels] = useState([]);
+  const [selectedHotelId, setSelectedHotelId] = useState(0);
   useEffect(() => {
     axios
       .get(`${process.env.REACT_APP_API_BASE_URL}/hotels`, {
@@ -14,11 +17,14 @@ export default function WithPay() {
         },
       })
       .then((resp) => {
-        console.log(resp.data);
         setHotels(resp.data);
       })
       .catch((err) => console.log(err));
   }, []);
+
+  function handleHotelSelect(id) {
+    setSelectedHotelId(id);
+  }
 
   return (
     <WithPayContainer>
@@ -27,20 +33,15 @@ export default function WithPay() {
       <HotelList>
         {hotels.map((res) => {
           return (
-            <Hotel>
-              <img src={res.image}></img>
-              <h2>{res.name}</h2>
-              <h3>Tipos de acomodação</h3>
-              {res.Rooms.map((resp) => {
-                return (
-                  <>
-                    <p>{resp.name}</p>
-                    <h3>Vagas disponiveis</h3>
-                    <p>{resp.capacity}</p>
-                  </>
-                );
-              })}
-            </Hotel>
+            <Hotel
+              image={res.image}
+              name={res.name}
+              rooms={res.Rooms}
+              key={res.id}
+              id={res.id}
+              selected={selectedHotelId === res.id}
+              handleSelect={handleHotelSelect}
+            />
           );
         })}
       </HotelList>
@@ -63,28 +64,4 @@ const WithPayContainer = styled.div`
 
 const HotelList = styled.div`
   display: flex;
-`;
-
-const Hotel = styled.div`
-  margin-right: 19px;
-  background-color: #EBEBEB;
-  padding: 14px;
-  border-radius: 10px;
-  cursor: pointer;
-  img {
-    width: 168px;
-    height: 109px;
-  }
-  h2 {
-    font-size: 20px;
-    margin-bottom: 10px;
-  }
-  h3 {
-    font-size: 12px;
-  }
-  p {
-    margin-bottom: 14px;
-    font-size: 12px;
-    color: #3c3c3c;
-  }
 `;
