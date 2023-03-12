@@ -1,12 +1,15 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 import Room from './Room';
-export default function RoomsList({ RoomsApi }) {
+export default function RoomsList({ HotelId, HotelRooms }) {
+  const filterRooms = HotelRooms.filter((e) => e.hotelId === HotelId);
+  const [selectRooms, setSelectRooms] = useState();
   return (
     <Rooms>
       <h2>Ótima pedida! Agora escolha seu quarto:</h2>
       <AllRooms>
-        {RoomsApi.map((e, i) => {
-          return <Room data={e} />;
+        {filterRooms.map((e, i) => {
+          return <Room data={e} key={i} index={i} setSelectRooms={setSelectRooms} selectRooms={selectRooms} selected={selectRooms===i } />;
         })}
       </AllRooms>
     </Rooms>
