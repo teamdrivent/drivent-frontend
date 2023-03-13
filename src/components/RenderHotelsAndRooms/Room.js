@@ -7,7 +7,10 @@ export default function Room({ data, selectRooms, setSelectRooms, index, selecte
   const reservados = 1; //apenas para simular possiveis reservas dos quartos
 
   function chooseRoom() {
-    setSelectRooms(index);
+    const isUnavailable = data.capacity === reservados;
+    if(!isUnavailable) {
+      setSelectRooms(index);
+    }
   }
 
   const isUnavailable = data.capacity === reservados;

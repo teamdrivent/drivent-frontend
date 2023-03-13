@@ -5,7 +5,7 @@ import useToken from '../../hooks/useToken';
 import RoomsList from '../RenderHotelsAndRooms/RoomsList';
 import Hotel from './HotelComponent';
 
-export default function WithPay() {
+export default function WithPay({ bookingId, setBooking, setBookingId }) {
   const token = useToken();
   const [hotels, setHotels] = useState([]);
   const [selectedHotelId, setSelectedHotelId] = useState(0);
@@ -49,7 +49,7 @@ export default function WithPay() {
           );
         })}
       </HotelList>
-      {selectedHotelId !== 0 ? <RoomsList HotelId={selectedHotelId}  HotelRooms={rooms}/> : null}
+      {selectedHotelId !== 0 ? <RoomsList HotelId={selectedHotelId} setBooking={setBooking} setBookingId={setBookingId} bookingId={bookingId} HotelRooms={rooms}/> : null}
     </WithPayContainer>
   );
 }
