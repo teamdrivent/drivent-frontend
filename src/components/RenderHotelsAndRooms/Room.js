@@ -32,6 +32,7 @@ const OneRoom = styled.div`
   border-radius: 10px;
   display: flex;
   margin-right: 20px;
+  margin-bottom: 10px;
   align-items: center;
   justify-content: space-between;
   font-size: 20px;
