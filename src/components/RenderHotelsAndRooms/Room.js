@@ -1,20 +1,22 @@
 import styled from 'styled-components';
 import { useState } from 'react';
 import { HiOutlineUser } from 'react-icons/hi';
-export default function Room({ data }) {
+import RenderCapacityIcon from './RenderCapacityIcon.js';
+export default function Room({ data, selectRooms, setSelectRooms, index, selected }) {
   const [select, setSelect] = useState(false);
+  const reservados = 1; //apenas para simular possiveis reservas dos quartos
+
+  function chooseRoom() {
+    setSelectRooms(index);
+  }
+
+  const isUnavailable = data.capacity === reservados;
+
   return (
-    <OneRoom onClick={() => (select === false ? setSelect(true) : setSelect(false))} bool={select}>
+    <OneRoom onClick={chooseRoom} bool={selected} unavailable={isUnavailable}>
       {data.name}
       <div>
-        {data.capacity === 2 ? (
-          <>
-            <HiOutlineUser fontSize={'22.25px'} />
-            <HiOutlineUser fontSize={'22.25px'} />
-          </>
-        ) : (
-          <HiOutlineUser fontSize={'22.25px'} />
-        )}
+        <RenderCapacityIcon capacity={data.capacity} select={selected} reservados={reservados} />
       </div>
     </OneRoom>
   );
@@ -34,4 +36,6 @@ const OneRoom = styled.div`
   font-weight: 700;
   padding: 10px;
   background-color: ${(props) => (props.bool === false ? null : '#FFEED2')};
+  cursor: ${(props) => (props.unavailable ? 'not-allowed' : 'pointer')};
+  background-color: ${(props) => (props.unavailable ? '#CECECE' : props.bool ? '#FFEED2' : null)};
 `;

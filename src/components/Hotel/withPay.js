@@ -9,6 +9,7 @@ export default function WithPay() {
   const token = useToken();
   const [hotels, setHotels] = useState([]);
   const [selectedHotelId, setSelectedHotelId] = useState(0);
+  const [rooms, setRooms] = useState([]);
   useEffect(() => {
     axios
       .get(`${process.env.REACT_APP_API_BASE_URL}/hotels`, {
@@ -33,18 +34,22 @@ export default function WithPay() {
       <HotelList>
         {hotels.map((res) => {
           return (
-            <Hotel
-              image={res.image}
-              name={res.name}
-              rooms={res.Rooms}
-              key={res.id}
-              id={res.id}
-              selected={selectedHotelId === res.id}
-              handleSelect={handleHotelSelect}
-            />
+            (
+              <Hotel
+                image={res.image}
+                name={res.name}
+                rooms={res.Rooms}
+                key={res.id}
+                id={res.id}
+                setRooms={setRooms}
+                selected={selectedHotelId === res.id}
+                handleSelect={handleHotelSelect}
+              />
+            ) 
           );
         })}
       </HotelList>
+      {selectedHotelId !== 0 ? <RoomsList HotelId={selectedHotelId}  HotelRooms={rooms}/> : null}
     </WithPayContainer>
   );
 }

@@ -2,11 +2,11 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import styled from 'styled-components';
 
-export default function Hotel({ id, image, name, rooms, selected, handleSelect }) {
+export default function Hotel({ id, image, name, rooms, selected, handleSelect, setRooms }) {
   const [acomodationType, setAcomodationType] = useState('');
   function selectHotel() {
     handleSelect(id);
-    console.log(rooms);
+    setRooms(rooms);
   }
 
   useEffect(() => {
