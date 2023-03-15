@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import WithoutHotel from '../../../components/Hotel/withouHotel';
 import WithoutPay from '../../../components/Hotel/withoutPay';
 import WithPay from '../../../components/Hotel/withPay';
-import useTicket from '../../../hooks/api/useTicket';
 import useToken from '../../../hooks/useToken';
 import axios from 'axios';
 import AlreadyBooked from '../../../components/Hotel/AlreadyBooked';
