@@ -12,6 +12,7 @@ import Link from '../../components/Link';
 import EventInfoContext from '../../contexts/EventInfoContext';
 
 import useSignUp from '../../hooks/api/useSignUp';
+import GithubSignInButton from '../../components/Auth/GithubSignInButton';
 
 export default function Enroll() {
   const [email, setEmail] = useState('');
@@ -21,7 +22,7 @@ export default function Enroll() {
   const { loadingSignUp, signUp } = useSignUp();
 
   const navigate = useNavigate();
-  
+
   const { eventInfo } = useContext(EventInfoContext);
 
   async function submit(event) {
@@ -55,6 +56,7 @@ export default function Enroll() {
           <Button type="submit" color="primary" fullWidth disabled={loadingSignUp}>Inscrever</Button>
         </form>
       </Row>
+      <GithubSignInButton />
       <Row>
         <Link to="/sign-in">Já está inscrito? Faça login</Link>
       </Row>
