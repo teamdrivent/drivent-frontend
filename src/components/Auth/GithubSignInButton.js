@@ -1,5 +1,8 @@
 import styled from 'styled-components';
 import image from '../../assets/images/github.png';
+import qs from 'query-string';
+import { useEffect } from 'react';
+import axios from 'axios';
 export default function GithubSignInButton() {
   function goToGithub(e) {
     e.preventDefault();
@@ -8,14 +11,33 @@ export default function GithubSignInButton() {
     const params = {
       response_type: 'code',
       scope: 'user',
-      client_id: `${process.env.CLIENT_ID}`,
-      redirect_uri: `${process.env.REDIRECT_URL}`,
+      client_id: `${process.env.REACT_APP_CLIENT_ID}`,
+      redirect_uri: `${process.env.REACT_APP_REDIRECT_URL}`,
     };
 
-    const queryString = JSON.stringify(params);
+    const queryString = qs.stringify(params);
     const authUrl = `${GITHUB_URL}?${queryString}`;
-    console.log(params);
+    window.location.href = authUrl;
   }
+
+  useEffect(async() => {
+    const params = {
+      response_type: 'code',
+      scope: 'user',
+      client_id: `${process.env.REACT_APP_CLIENT_ID}`,
+      redirect_uri: `${process.env.REACT_APP_REDIRECT_URL}`,
+    };
+    const { code } = qs.parseUrl(window.location.href).query;
+    if (code) {
+      try {
+        const promise = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/users/register/github`, { code });
+        const user = promise.data;
+        console.log(user);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }, []);
 
   return (
     <>
