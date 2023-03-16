@@ -3,7 +3,15 @@ import image from '../../assets/images/github.png';
 import qs from 'query-string';
 import { useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import { toast } from 'react-toastify';
+import UserContext from '../../contexts/UserContext';
+
 export default function GithubSignInButton() {
+  const { setUserData } = useContext(UserContext);
+  const navigate = useNavigate();
+
   function goToGithub(e) {
     e.preventDefault();
     const GITHUB_URL = 'https://github.com/login/oauth/authorize';
@@ -21,18 +29,19 @@ export default function GithubSignInButton() {
   }
 
   useEffect(async() => {
-    const params = {
-      response_type: 'code',
-      scope: 'user',
-      client_id: `${process.env.REACT_APP_CLIENT_ID}`,
-      redirect_uri: `${process.env.REACT_APP_REDIRECT_URL}`,
-    };
     const { code } = qs.parseUrl(window.location.href).query;
     if (code) {
       try {
-        const promise = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/users/register/github`, { code });
-        const user = promise.data;
-        console.log(user);
+        await axios
+          .post(`${process.env.REACT_APP_API_BASE_URL}/users/register/github`, { code })
+          .then((res) => {
+            setUserData(res.data);
+            toast('Login realizado com sucesso!');
+            navigate('/dashboard');
+          })
+          .catch((err) => {
+            toast('Não foi possível fazer o login!');
+          });
       } catch (error) {
         console.log(error);
       }
