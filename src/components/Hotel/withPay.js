@@ -34,22 +34,29 @@ export default function WithPay({ bookingId, setBooking, setBookingId }) {
       <HotelList>
         {hotels.map((res) => {
           return (
-            (
-              <Hotel
-                image={res.image}
-                name={res.name}
-                rooms={res.Rooms}
-                key={res.id}
-                id={res.id}
-                setRooms={setRooms}
-                selected={selectedHotelId === res.id}
-                handleSelect={handleHotelSelect}
-              />
-            ) 
+            <Hotel
+              image={res.image}
+              name={res.name}
+              rooms={res.Rooms}
+              key={res.id}
+              id={res.id}
+              setRooms={setRooms}
+              selected={selectedHotelId === res.id}
+              handleSelect={handleHotelSelect}
+            />
           );
         })}
       </HotelList>
-      {selectedHotelId !== 0 ? <RoomsList HotelId={selectedHotelId} setBooking={setBooking} setBookingId={setBookingId} bookingId={bookingId} HotelRooms={rooms}/> : null}
+      {selectedHotelId !== 0 ? (
+        <RoomsList
+          HotelId={selectedHotelId}
+          setBooking={setBooking}
+          setBookingId={setBookingId}
+          bookingId={bookingId}
+          HotelRooms={rooms}
+          selectedHotelId={selectedHotelId}
+        />
+      ) : null}
     </WithPayContainer>
   );
 }

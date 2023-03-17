@@ -2,13 +2,13 @@ import styled from 'styled-components';
 import { useState } from 'react';
 import { HiOutlineUser } from 'react-icons/hi';
 import RenderCapacityIcon from './RenderCapacityIcon.js';
-export default function Room({ data, selectRooms, setSelectRooms, index, selected }) {
+export default function Room({ data, selectRooms, setSelectRooms, index, selected, roomsReservations }) {
   const [select, setSelect] = useState(false);
-  const reservados = 1; //apenas para simular possiveis reservas dos quartos
-
+  console.log(roomsReservations);
+  const reservados =  roomsReservations; //apenas para simular possiveis reservas dos quartos
   function chooseRoom() {
     const isUnavailable = data.capacity === reservados;
-    if(!isUnavailable) {
+    if (!isUnavailable) {
       setSelectRooms(index);
     }
   }
