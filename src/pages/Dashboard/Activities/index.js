@@ -3,8 +3,9 @@ import axios from 'axios';
 import useToken from '../../../hooks/useToken';
 import WithoutPayActivities from '../../../components/Activities/withoutPayActivities';
 import MethodOnline from '../../../components/Activities/MethodOnline';
+import LiveActivities from '../../../components/Activities/liveActivities';
 
-export default function Activities() {
+export function Activities() {
   const [ticket, setTicket] = useState(null);
   const token = useToken();
 
@@ -19,8 +20,9 @@ export default function Activities() {
 
   return (
     <>
-      {ticket?.status !== 'PAID' ? <WithoutPayActivities /> : ''}
-      {ticket?.ticketTypeId === 1 || ticket?.ticketTypeId === 3 ? <MethodOnline /> : ''}
+      {/* {ticket?.status !== 'PAID' ? <WithoutPayActivities /> : ''}
+      {ticket?.ticketTypeId === 1 || ticket?.ticketTypeId === 3 ? <MethodOnline /> : <LiveActivities />} */}
+      <LiveActivities/>
     </>
   );
 }

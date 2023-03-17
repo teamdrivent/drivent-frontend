@@ -1,6 +1,12 @@
 import styled from 'styled-components';
+import axios from 'axios';
+import { useEffect } from 'react';
 
 export default function WithoutPayActivities() {
+  useEffect(() => {
+    
+  })
+
   return (
     <WhithouPayContainer>
       <h1>Escolha de atividade</h1>
