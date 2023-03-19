@@ -1,14 +1,15 @@
 import styled from 'styled-components';
 import { BsBoxArrowInRight } from 'react-icons/bs';
+import { AiOutlineCloseCircle } from 'react-icons/ai';
 import { useState } from 'react';
 import { useEffect } from 'react';
 
 export default function ActivityComponent(props) {
   const { act, heightOfBox, day } = props;
+  const randomNumber = Math.floor(Math.random() * 27);
   const [heihgthState, setHeightState] = useState(heightOfBox);
   const height = ((Number(act.finishesAt) - Number(act.startsAt)) / 100) * 80;
   const stringedHeight = heightOfBox + 'px';
-  console.log(stringedHeight);
 
   function setHeightOfBox() {
     document.documentElement.style.setProperty('--height-box', heightOfBox);
@@ -27,9 +28,11 @@ export default function ActivityComponent(props) {
             {act.finishesAt.slice(-2)}
           </p>
         </ActivityInfo>
-        <ActivityDisp>
-          <BsBoxArrowInRight />
-          <p>27 vagas</p>
+        <ActivityDisp color={randomNumber} disabled={randomNumber === 0 ?true : false}>
+          <button disabled={randomNumber === 0 ?true : false}>
+            {randomNumber === 0 ? <AiOutlineCloseCircle fontSize={20} /> : <BsBoxArrowInRight fontSize={20} />}
+          </button>
+          <p>{randomNumber === 0 ? 'Esgotado' : randomNumber}</p>
         </ActivityDisp>
       </Activity>
     </>
@@ -77,8 +80,13 @@ const ActivityDisp = styled.div`
   align-items: center;
   flex-direction: column;
   font-size: 20px;
-  color: green;
+  color: ${(props) => (props.color == 0 ? '#CC6666' : '#078632')};
   p {
     font-size: 9px;
+  }
+  button {
+    border: none;
+    color: ${(props) => (props.color == 0 ? '#CC6666' : '#078632')};
+    cursor: ${(props) => (props.disabled ? 'not-allowed' :'pointer')};
   }
 `;
