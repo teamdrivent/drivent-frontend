@@ -15,6 +15,7 @@ export default function Hotel() {
     axios
       .get(`${process.env.REACT_APP_API_BASE_URL}/tickets`, { headers: { Authorization: `Bearer ${token}` } })
       .then((res) => {
+        console.log(res.data);
         setTicket(res.data);
       })
       .catch((err) => console.log(err));
@@ -28,15 +29,15 @@ export default function Hotel() {
 
   return (
     <>
-      {
-        booking == undefined || bookingId !== false? 
-          (
-            (ticket?.ticketTypeId === 1 || ticket?.ticketTypeId === 3 ? <WithoutHotel /> : ''),
-            (ticket?.status !== 'PAID' ? <WithoutPay /> : ''),
-            (ticket?.ticketTypeId === 2 && ticket?.status === 'PAID' ? <WithPay bookingId={bookingId} setBooking={setBooking} setBookingId={setBookingId} /> : '')
-          ) : 
-          <AlreadyBooked setBookingId={setBookingId}/>
-      }
+      {ticket?.status !== 'PAID' ? (
+        <WithoutPay />
+      ) : booking ? (
+        <AlreadyBooked setBookingId={setBookingId} />
+      ) : ticket?.ticketTypeId === 1 || ticket?.ticketTypeId === 3 ? (
+        <WithoutHotel />
+      ) : (
+        <WithPay bookingId={bookingId} setBooking={setBooking} setBookingId={setBookingId} />
+      )}
     </>
   );
 }
