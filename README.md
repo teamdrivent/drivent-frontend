@@ -2,6 +2,9 @@
 
 Front-end for Driven.t, an event management solution.
 
+## Try the app
+https://drivent-frontend-oscarfgmaia.vercel.app/
+
 ## About
 
 Driven.t is a web browser application with which you can manage every single aspect of your event.
